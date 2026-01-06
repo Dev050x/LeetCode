@@ -17,8 +17,9 @@ async function startWorker() {
         while(true) {
             try {
                 const submission = await client.brPop("submissions", 0);
-                console.log("submission received", submission);
-                await process_submission(submission);
+                console.log("submission received");
+                await process_submission(submission.element);
+                console.log("request processed...");
             } catch (error) {
                 console.log("there is some error in processing", error);
             }
@@ -29,3 +30,4 @@ async function startWorker() {
     }
 }
 
+startWorker();
