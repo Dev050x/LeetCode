@@ -19,6 +19,20 @@ async function startServer() {
     }
 };
 
+app.post("/submit", async (req , res) => {
+    const {program_id, code, language} = req.body;
+    console.log(`program id: ${program_id}, code: ${code}, language: ${language}`);
+
+    try {
+        await redis_client.lPush("submissions", JSON.stringify({program_id, code, language}));
+        res.status(200).send("submission received");
+    } catch (error) {
+        console.log("there si some error in submission", error);
+    }
+
+});
+
+
 
 
 startServer();
