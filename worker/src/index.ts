@@ -7,8 +7,12 @@ async function process_submission(submission:any) {
     console.log("processeing problem id:......", submission_obj.program_id);
     console.log("code:", submission_obj.code);
     console.log("language:", submission_obj.language);
-    return new Promise(resolve => setTimeout(resolve, 1000));
-}
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    client.publish("problem_done", JSON.stringify({
+        program_id: submission_obj.program_id,
+        status: "TLE"
+    }));
+}   
 
 async function startWorker() {
     try {
